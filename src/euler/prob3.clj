@@ -1,6 +1,6 @@
 (ns euler.prob3)
 
-(defn ^:private prime-factors [n]
+(defn prime-factors [n]
   (let [limit (Math/sqrt n)]
     (loop [remainder n
            acc []
