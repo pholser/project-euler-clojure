@@ -3,7 +3,7 @@
             [clojure.string :as str]))
 
 (def really-big-number
-  (with-open [rdr (io/reader "resources/really-big-number.txt")]
+  (with-open [rdr (io/reader "resources/8-8-really-big-number.txt")]
     (->> (line-seq rdr)
          (str/join))))
 
