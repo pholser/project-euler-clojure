@@ -1,7 +1,9 @@
 (ns euler.prob7
   (:require [euler.prob3 :refer [prime-factors]]))
 
-(defn ^:private prime? [n]
+(def memoized-prime-factors (memoize prime-factors))
+
+(defn prime? [n]
   (= [n] (prime-factors n)))
 
 (defn solution []

@@ -1,23 +1,15 @@
 (ns euler.prob3)
 
-(defn prime-factors [n]
-  (let [limit (Math/sqrt n)]
-    (loop [remainder n
-           acc []
-           divisor 2]
-      (cond (> divisor n)
-            acc
-            (<= remainder 1)
-            acc
-            (= 0 (rem remainder divisor))
-            (recur (quot remainder divisor)
-                   (conj acc divisor)
-                   divisor)
-            :else
-            (recur remainder
-                   acc
-                   (if (= 2 divisor) 3 (+ 2 divisor)))))))
+(defn prime-factors
+  ([n]
+   (prime-factors [] n 2))
+  ([factors n candidate]
+   (cond
+     (= n 1) factors
+     (zero? (rem n candidate)) (recur (conj factors candidate) (quot n candidate) candidate)
+     (> candidate (Math/sqrt n)) (conj factors n)
+     :else (recur factors n (inc candidate)))))
 
 (defn solution []
   (->> (prime-factors 600851475143N)
-       (apply max)))
+       (reduce max)))
