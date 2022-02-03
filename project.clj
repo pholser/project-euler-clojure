@@ -3,4 +3,5 @@
   :url "http://example.com/FIXME"
   :dependencies [[org.clojure/clojure "1.10.3"]
                  [org.clojure/math.numeric-tower "0.0.5"]
-                 [com.gfredericks/forty-two "1.0.0"]])
+                 [com.gfredericks/forty-two "1.0.0"]
+                 [clojure.java-time "0.3.3"]])
