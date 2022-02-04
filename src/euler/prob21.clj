@@ -1,7 +1,7 @@
 (ns euler.prob21
   (:require [euler.prob12 :refer [divisors]]))
 
-(defn ^:private proper-divisors [n]
+(defn proper-divisors [n]
   (->> (divisors n)
        (filter (partial not= n))))
 
