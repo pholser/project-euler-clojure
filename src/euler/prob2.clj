@@ -1,6 +1,6 @@
 (ns euler.prob2)
 
-(defn ^:private fast-fibo [n]
+(defn fast-fibo [n]
   (loop [[f1 f2] [1 2] index n]
     (cond (= 0 index) 1
           (= 1 index) f2
