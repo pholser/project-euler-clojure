@@ -15,40 +15,30 @@
 (defn lcm [a b]
   (/ (* a b) (gcd a b)))
 
-(def NaN (Math/log -1))
-
-(def primes
-  (concat '(2 3 5)
-          (filter prime? (iterate #(+ 2 %) 7))))
-
-(defn prime-factors-with-exponents [n]
-  (->> (prime-factors n)
-       (partition-by identity)
-       (map (fn [group] [(first group) (count group)]))))
-
-;;def multOrder_(a, p, k)
-;  pk = p ** k
-;  t = (p - 1) * p ** (k - 1)
-;  r = 1
-;  for q, e in t.prime_division
-;    x = powerMod(a, t / q**e, pk)
-;    while x != 1
-;      r *= q
-;      x = powerMod(x, q, pk)
-;    end
-;  end
-;  r
-;end
-
-(defn modpow
-  " b^e mod m (using Java which solves some cases the pure clojure method has to be modified to tackle--i.e. with large b & e and
-    calculation simplications when gcd(b, m) == 1 and gcd(e, m) == 1) "
+(defn modexp
+  "b^e (mod m)"
   [b e m]
-  (.modPow (biginteger b) (biginteger e) (biginteger m)))
+  (if (zero? e)
+    (rem 1 m)
+    (loop [c 1 e' 1]
+      (let [c (rem (* b c) m)]
+        (if (= e' e)
+          c
+          (recur c (inc e')))))))
 
+(defn ord
+  "Multiplicative order of a (mod n)"
+  [a n]
+  (cond
+    (<= n 1) ##NaN
+    (not= 1 (gcd a n)) ##NaN
+    :else (->> (iterate inc 1)
+               (filter #(= 1 (modexp a % n)))
+               (first))))
 
-(defn ord [a m]
-  (->> m
-       (prime-factors-with-exponents)
-       (map (partial ord' a))
-       (reduce lcm)))
+(defn solution []
+  (->> (range 1 1000)
+       (map (fn [i] [i (ord 10 i)]))
+       (remove #(Double/isNaN (second %)))
+       (apply max-key second)
+       (first)))
