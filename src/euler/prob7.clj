@@ -4,7 +4,8 @@
 (def memoized-prime-factors (memoize prime-factors))
 
 (defn prime? [n]
-  (= [n] (prime-factors n)))
+  (when (> n 1)
+    (= [n] (prime-factors n))))
 
 (defn solution []
   (->> (iterate inc 2)
