@@ -12,7 +12,7 @@
 
 (defn solution []
   (as-> (for [a (range -999 1000)
-             b (range -1000 1001)]
+              b (range -1000 1001)]
          (let [q (quadratic a b)]
            {:a a :b b :count (count (prime-seq q))})) <>
         (apply (partial max-key :count) <>)
